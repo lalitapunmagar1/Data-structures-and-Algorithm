@@ -44,9 +44,20 @@ class Queue{
 			if(IsEmpty()){
 				cout<<"The queue is empty"<<endl;
 			}else{
-				int temp=arr[front];
+				/*int temp=arr[front];
 				front++;
-				cout<<temp<<" is dequeued from the queue"<<endl;
+				cout<<temp<<" is dequeued from the queue"<<endl;*/
+				
+				int min=front;
+				for(int i= front; i<=rear; i++){
+					if(arr[min]>arr[i]){
+						min=i;
+					}
+				}
+				for(int i=min; i>=front; i--){
+					arr[i]=arr[i-1];
+				}
+				front++;
 			}
 		}
 		void Traverse(){

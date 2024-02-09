@@ -1,130 +1,124 @@
 #include<iostream>
-using namespace std;
 #define max 4
- 
- class circqueue{
-  protected:
-  int data[max];
-  int rear;
-  int front;
 
-  public:
-  circqueue(){
-    this->rear=-1;
-    this->front=-1;
-  }
+using namespace std;
 
-  void makeempty(){
-    rear=-1;
-    front=-1;
-  }
 
-  int checkempty(){
-    if(front==-1)
-    return 1;
-    else return 0;
-  }
+	class CircularQueue{
+		public:
+		int front;
+		int rear;
+		int queue[max]; 
+			void MakeEmpty(){
+			rear = max-1;
+			front=max-1;
+		}	
+		
+		bool IsEmpty(){
+			if(rear== front){
+				cout<<"Queue is Empty"<<endl;
+				return true;
+			}else return false;
+		}
+	
+		bool IsFull(){
+			if(front == (rear+1)%max){   // front = 0 
+				cout<<"Queue is full"<<endl;
+				return true;
+			}else{
+				return false;	
+			} 
+		}
+		int enqueue(){
+			if(!IsFull()){
+				
+				int item;
+				cout<<"Enter the element to be enqueued: ";
+				cin>>item;
+				rear = (rear+1)%max;		//rear = 0		
+				//cout<<"REAR  ->"<<rear<<endl;
+				this->queue[this->rear] = item;
+				//cout<<queue[rear]<<endl;
+			}
+		}
+		void dequeue(){
+			if(!IsEmpty()){
+							
+				front = (front+1)%max;
+				cout<<"Deleted item is "<<queue[front]<<endl;
+//				return queue[front];
+				}
+		}
+		void traverse(){
+			if(!IsEmpty()){				
+			//cout<<"Front  ->"<<front<<endl;
+			//cout<<"Rear   ->"<<rear<<endl;
+			cout<<"Data in the circular queue is "<<endl;		
+			for( int i = (front+1)%max; i != rear; i = (i+1)%max)
+			{
+			cout<<queue[i]<< ", ";
+			}
+			cout<<queue[rear]<<endl;
+			cout<<"\t";
+			}	
+			cout<<endl;
+		}
+		};
 
-  int checkfull(){
-    if(((rear+1)%max)==(front%max))
-    return 1;
-    else return 0;
-  }
 
-  void endqueue(int n){
-    if(checkfull()){
-      cout<<"The queue is full cannot enter "<< n <<" in the queue"<<endl;
-    }else if(rear==-1&&front==-1){
-      cout<<"The rear and front are set to 0"<<endl;
-    rear=front=0;
-    data[rear]=n;
-    }else{
-      ++rear;
-      data[rear%max]=n;
-      cout<<"The rear is set to "<<rear<<endl;
-    }   
-    }
-    
-
-    void dequeue(){
-      if(checkempty()){
-        cout<<"No data to dequeue"<<endl;
-      }
-      else{
-        if(front==rear){
-          makeempty();
-        }else{
-        ++front;
-        cout<<"The front is now "<<front<<endl;
-      }
-    }
-    }
-
-    void traverse(){
-      if(checkempty()){
-        cout<<"No data to display."<<endl;
-      }else{
-      cout<<"The data in the queue is : ";
-      for(int i=front;i<rear;++i){
-        cout<<data[i%max]<<" ";
-      }
-      cout<<data[rear]<<endl;
-      }
-    }
-  };
-
-  int main(){
-    circqueue q;
-    int data;
-    int n=0;
-  cout<<"Enter the operation:"<<endl;
-	cout<<"1. To make the queue empty"<<endl;
-	cout<<"2. To check the queue is empty or not"<<endl;
-	cout<<"3. To check the queue is full or not"<<endl;
-	cout<<"4. To insert the data into the queue"<<endl;
-	cout<<"5. To delete the data from the queue"<<endl;
-	cout<<"6. To see the queue "<<endl;
-	cout<<"7. Exit"<<endl;
-	do{
-			cin>>n;
-		switch(n){
+	int main(){
+		int ch;
+		CircularQueue C;
+		C.MakeEmpty();
+		char y = 'y';
+		label:
+		cout<<"Enter an operation to be executed: "<<endl;;	
+			cout<<"1.Make Empty\n";			
+			cout<<"2.Enqueue\n";
+			cout<<"3.Dequeue\n";
+			cout<<"4.Traverse\n";
+			cout<<"5.Is Full\n";
+			cout<<"4.Is Empty\n";
+			cout<<"7.Exit"<<endl;
+		
+		
+		cin>>ch;
+		switch(ch){			
 			case 1:
-      q.makeempty();
-				break;
-		case 2:
-		if(q.checkempty()){
-			cout<<"The given data is empty"<<endl;
-	}
-	else{
-		cout<<"The guven data is not empty"<<endl;
-	}	
-	break;
-	case 3:
-				if(q.checkfull()){
-			cout<<"The given data is full"<<endl;
-	}
-	else{
-		cout<<"The given data is not full"<<endl;
-	}	
-	break;
-	case 4:
-  cout<<"Enter data : ";
-  cin>>data;
-		q.endqueue(data);
-		break;
-		case 5:
-;
-			q.dequeue();
+				C.MakeEmpty();
+			goto label;
+			break;			
+			case 2:
+				C.enqueue();
+			goto label;
 			break;
+			case 3:
+				C.dequeue();
+			goto label;
+			break;
+			case 4:
+				C.traverse();
+			goto label;
+			break;
+			case 5:
+				if(C.IsFull()){
+					cout<<"Queue is full";
+				}else{
+					cout<<"Queue is not full";
+				}
+			goto label;
 			case 6:
-				q.traverse();
-				break;
-				default:
-					n=8;
-}
-}while(n!=8);
-return 0;
-}
-
- 
-
+				if(C.IsEmpty()){
+					cout<<"Queue is empty";
+				}else{
+					cout<<"Queue is not empty";
+				}
+			goto label;
+			
+			default:
+				exit(0);
+			
+			break;				
+		}	
+		return 0;		
+	}

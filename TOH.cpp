@@ -2,8 +2,7 @@
 #include<math.h>
 using namespace std;
 
-void TOH(int n, char sour, char temp, char des)
-{
+void TOH(int n, char sour, char temp, char des){
 	int steps=0;
     if (n == 1) {
         cout << "Move Disk " << n << " from " << sour << " to " << des << endl;

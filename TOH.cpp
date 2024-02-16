@@ -8,21 +8,16 @@ void TOH(int n, char sour, char temp, char des){
         cout << "Move Disk " << n << " from " << sour << " to " << des << endl;
         return;
     }
-
     TOH(n - 1, sour, des, temp);
     cout << "Move Disk " << n << " from " << sour << " to " << des << endl;
     TOH(n - 1, temp, sour, des);
 }
-
-int main()
-{
+int main(){
     int n;
-
     cout << "Enter no. of disks:";
     cin >> n;
     int steps=pow(2,n)-1;
     cout<< "for " <<n<< " disks we have " <<steps<< " steps. " <<endl;
-    TOH(n, 'A', 'B', 'C');
-
+    TOH(n, 'S','D', 'T');
     return 0;
 }

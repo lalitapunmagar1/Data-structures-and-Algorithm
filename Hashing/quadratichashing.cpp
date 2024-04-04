@@ -1,25 +1,42 @@
-#include <iostream>
+#include<iostream>
 using namespace std;
 
 int main(){
-    int data[10]={6,7,45,23,77,50,49,51,69,73};
-    int hash[10]={0};
+    int n, size;
+    cout << "Enter the size of the hash table: ";
+    cin >> n;
+    cout << "How many elements do you want to enter? ";
+    cin >> size;
+
+    int A[n], B[n]={0},C[n]={0}; 
+    int x;
     
-    for(int i=0;i<10;i++){
-        int temp;
-        temp=data[i];
-        
-        for(int j=0;j<100;j++,temp=temp+((j+1)*(j+1))){// the only difference from linear probing
-            if(hash[temp%10]==0){
-                hash[temp%10]=data[i];
-                break;
-            }
+    cout << "Enter elements of the array: ";
+    for(int i = 0; i < size; i++) {
+        cin >> x;
+        int pos = x % n; 
+        int index = pos;
+        int c=0;
+        if(B[pos] == 1) {
+            do {
+                c++;
+                pos = (index + c * c) % n; 
+            } while (B[pos] != 0); 
+        }
+        A[pos] = x; 
+        B[pos] = 1; 
+        C[pos]=c+1;
+    }
+
+    cout << "Index\t\tElement\t\tProb" << endl;
+    
+    for(int i = 0; i < n; i++) {
+        cout << i << "\t\t" ;
+        if(B[i]==0){
+            cout<<"Empty"<<endl;
+        }else{
+            cout << A[i] <<"\t\t"<<C[i]<< endl;   
         }
     }
-    
-    for(int i=0;i<10;i++){
-        cout<<hash[i]<<", ";
-    }
-    
     return 0;
 }
